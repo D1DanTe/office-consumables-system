@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Система учёта расходников{% endblock %}</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        display: flex;
+    }
+
+    .sidebar {
+        width: 260px;
+        min-height: 100vh;
+        background: #1f2937;
+        color: white;
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-top: 0;
+        margin-bottom: 30px;
+        text-align: center;
+        border-bottom: 1px solid #374151;
+        padding-bottom: 15px;
+    }
+
+    .sidebar a {
+        display: block;
+        color: #e5e7eb;
+        text-decoration: none;
+        padding: 12px;
+        margin-bottom: 5px;
+        border-radius: 8px;
+        transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+        background: #374151;
+        color: white;
+    }
+
+    .content {
+        flex: 1;
+        padding: 30px;
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #111827;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    table th {
+        background: #e5e7eb;
+        padding: 12px;
+        text-align: left;
+    }
+
+    table td {
+        padding: 12px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    table tr:hover {
+        background: #f9fafb;
+    }
+
+    button {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        max-width: 500px;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    a {
+        color: #2563eb;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+.action-btn {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 2px;
+}
+
+.btn-green {
+    background: #dcfce7;
+    color: #166534 !important;
+}
+
+.btn-red {
+    background: #fee2e2;
+    color: #991b1b !important;
+}
+
+.btn-blue {
+    background: #dbeafe;
+    color: #1e40af !important;
+}
+
+.btn-gray {
+    background: #f3f4f6;
+    color: #374151 !important;
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+    <h2>Расходники</h2>
+
+    <a href="/dashboard">Главная</a>
+
+    <a href="/products">Товары</a>
+
+    <a href="/requests">
+
+    Заявки
+
+    {% if current_user.role in ["admin", "super_admin"] and new_requests_count > 0 %}
+        ({{ new_requests_count }})
+    {% endif %}
+
+</a>
+
+    {% if current_user.role in ["admin", "super_admin"] %}
+
+        <a href="/purchase">
+            Требуется закупить
+        </a>
+
+        <a href="/receipts">
+            Поступления
+        </a>
+
+        <a href="/suppliers">
+            Поставщики
+        </a>
+
+    {% endif %}
+
+    {% if current_user.role == "super_admin" %}
+
+        <a href="/users">
+            Пользователи
+        </a>
+
+        <a href="#">
+            Отчёты
+        </a>
+
+    {% endif %}
+
+    <a href="/logout">Выход</a>
+
+</div>
+
+<div class="content">
+
+<div style="
+background:white;
+padding:15px 25px;
+border-radius:10px;
+margin-bottom:20px;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+    <div>
+        <b>Система учёта расходников</b>
+    </div>
+
+    <div>
+        👤 {{ current_user.get_full_name() }}
+        |
+        {{ current_user.role }}
+    </div>
+
+</div>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>

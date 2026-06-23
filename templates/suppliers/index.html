@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Поставщики
+{% endblock %}
+
+{% block content %}
+
+<h1>Поставщики</h1>
+
+<p>
+    <a href="/suppliers/add">
+        <button>
+            Добавить поставщика
+        </button>
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Компания</th>
+        <th>Контактное лицо</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Комментарий</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for supplier in suppliers %}
+
+    <tr>
+
+        <td>{{ supplier.company_name }}</td>
+
+        <td>{{ supplier.contact_person }}</td>
+
+        <td>{{ supplier.phone }}</td>
+
+        <td>{{ supplier.email }}</td>
+
+        <td>{{ supplier.comment }}</td>
+
+        <td>
+
+            <a href="/suppliers/edit/{{ supplier.id }}">
+                Редактировать
+            </a>
+
+            |
+
+            <a href="/suppliers/delete/{{ supplier.id }}">
+                Удалить
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

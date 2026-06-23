@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+Редактирование товара
+{% endblock %}
+
+{% block content %}
+
+<h1>Редактирование товара</h1>
+
+<form method="POST">
+
+    <p>Наименование</p>
+    <input
+        type="text"
+        name="name"
+        value="{{ product.name }}"
+        required
+    >
+
+    <p>Ед. измерения</p>
+    <input
+        type="text"
+        name="unit"
+        value="{{ product.unit }}"
+        required
+    >
+
+    <p>Текущий остаток</p>
+    <input
+        type="number"
+        name="current_stock"
+        value="{{ product.current_stock }}"
+        required
+    >
+
+    <p>Минимальный остаток</p>
+    <input
+        type="number"
+        name="min_stock"
+        value="{{ product.min_stock }}"
+        required
+    >
+
+   <p>Описание</p>
+
+<textarea
+    name="description"
+>{{ product.description }}</textarea>
+
+<p>Комментарий закупщику</p>
+
+<textarea
+    name="comment"
+>{{ product.comment }}</textarea>
+
+<br><br>
+
+<button type="submit">
+    Сохранить
+</button>
+
+</form>
+
+{% endblock %}

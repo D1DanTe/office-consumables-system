@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}
+Заявки
+{% endblock %}
+
+{% block content %}
+
+<h1>Заявки</h1>
+
+<p>
+    <a href="/requests/add">
+        <button>
+            Создать заявку
+        </button>
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>ID</th>
+        <th>Дата</th>
+        <th>Создал</th>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>На складе</th>
+        <th>Комментарий</th>
+        <th>Ед. изм.</th>
+        <th>Статус</th>
+
+        {% if current_user.role != "user" %}
+        <th>Действия</th>
+        {% endif %}
+    </tr>
+
+    {% for request in requests %}
+
+    <tr>
+
+        <td>{{ request.id }}</td>
+
+        <td>
+            {{ request.created_at.strftime('%d.%m.%Y %H:%M') }}
+        </td>
+
+        <td>{{ request.created_by }}</td>
+
+        <td>{{ request.product_name }}</td>
+
+        <td>{{ request.quantity }}</td>
+
+        <td>
+            {{ stock_data[request.id] }}
+
+            {% if stock_data[request.id] < request.quantity %}
+                ⚠️
+            {% endif %}
+        </td>
+
+        <td>{{ request.comment }}</td>
+
+        <td>{{ request.unit }}</td>
+
+        <td>
+
+            {% if request.status == "Новая" %}
+
+            <span style="background:#fef3c7;color:#92400e;padding:5px 10px;border-radius:20px;font-weight:bold;white-space: nowrap;">
+                🟡 Новая
+            </span>
+
+            {% elif request.status == "Одобрена" %}
+
+            <span style="background:#dcfce7;color:#166534;padding:
+            5px 10px;border-radius:20px;font-weight:bold;
+            white-space: nowrap;">
+                🟢 Одобрена
+            </span>
+
+            {% elif request.status == "Отклонена" %}
+
+            <span style="
+background:#fee2e2;
+color:#991b1b;
+padding:5px 10px;
+border-radius:20px;
+font-weight:bold;
+white-space: nowrap;
+">
+    🔴 Отклонена
+</span>
+
+            {% elif request.status == "Закуплена" %}
+
+            <span style="background:#dbeafe;color:#1e40af;padding:5px 10px;border-radius:20px;font-weight:bold;white-space: nowrap;">
+                🔵 Закуплена
+            </span>
+
+            {% elif request.status == "Выдана" %}
+
+            <span style="background:#dcfce7;color:#166534;padding:5px 10px;border-radius:20px;font-weight:bold;white-space: nowrap;">
+                ✅ Выдана
+            </span>
+
+            {% else %}
+
+            {{ request.status }}
+
+            {% endif %}
+
+        </td>
+
+        {% if current_user.role != "user" %}
+
+        <td>
+
+            {% if request.status == "Выдана" %}
+
+                <span style="color:green;font-weight:bold;">
+                    ✅ Заявка исполнена
+                </span>
+
+            {% else %}
+
+                <a
+    class="action-btn btn-green"
+    href="/requests/status/{{ request.id }}/Одобрена"
+>
+    Одобрить
+</a>
+<a
+    class="action-btn btn-red"
+    href="/requests/status/{{ request.id }}/Отклонена"
+>
+    ✕ Отклонить
+</a>
+
+                <a
+    class="action-btn btn-blue"
+    href="/requests/status/{{ request.id }}/Закуплена"
+>
+   📦 Закуплена
+</a>
+
+                {% if stock_data[request.id] >= request.quantity %}
+<a
+    class="action-btn btn-gray"
+    href="/requests/issue/{{ request.id }}"
+    onclick="return confirm('Вы действительно хотите выдать товар?');"
+>
+   📤 Выдать
+</a>
+
+                {% else %}
+
+                <span style="color:red;font-weight:bold;">
+                    ⚠ Недостаточно остатка
+                </span>
+
+                {% endif %}
+
+                {% if current_user.role == "super_admin" %}
+<a
+    class="action-btn btn-red"
+    href="/requests/delete/{{ request.id }}"
+    onclick="return confirm('Удалить заявку?');"
+>
+   🗑 Удалить
+</a>
+
+                {% endif %}
+
+            {% endif %}
+
+        </td>
+
+        {% endif %}
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

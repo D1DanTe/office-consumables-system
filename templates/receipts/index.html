@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+Поступления
+{% endblock %}
+
+{% block content %}
+
+<h1>Поступления</h1>
+
+<p>
+    <a href="/receipts/add">
+        <button>
+            Добавить поступление
+        </button>
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Дата</th>
+        <th>Создал</th>
+        <th>Товар</th>
+        <th>Количество</th>
+        <th>Ед. изм.</th>
+        <th>Комментарий</th>
+    </tr>
+
+    {% for receipt in receipts %}
+
+    <tr>
+
+        <td>
+            {{ receipt.created_at.strftime('%d.%m.%Y %H:%M') }}
+        </td>
+
+        <td>
+            {{ receipt.created_by }}
+        </td>
+
+        <td>
+            {{ receipt.product_name }}
+        </td>
+
+        <td>
+            {{ receipt.quantity }}
+        </td>
+
+        <td>
+            {{ receipt.unit }}
+        </td>
+
+        <td>
+            {{ receipt.comment }}
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

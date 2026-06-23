@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+Требуется закупить
+{% endblock %}
+
+{% block content %}
+
+<h1>Требуется закупить</h1>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Наименование</th>
+        <th>Ед. изм.</th>
+        <th>Остаток</th>
+        <th>Мин. остаток</th>
+        <th>Комментарий</th>
+    </tr>
+
+    {% for product in products %}
+
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.unit }}</td>
+        <td>{{ product.current_stock }}</td>
+        <td>{{ product.min_stock }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.description }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Добавить товар</h1>
+
+<form method="POST">
+
+    <p>Наименование</p>
+    <input type="text" name="name" required>
+
+    <p>Ед. измерения</p>
+    <input type="text" name="unit" required>
+
+    <p>Текущий остаток</p>
+    <input type="number" name="current_stock" required>
+
+    <p>Минимальный остаток</p>
+    <input type="number" name="min_stock" required>
+
+    <p>Описание</p>
+<textarea name="description"></textarea>
+
+<p>Комментарий закупщику</p>
+<textarea name="comment"></textarea>
+
+<br><br>
+
+<button type="submit">
+    Сохранить
+</button>
+
+</form>
+
+{% endblock %}

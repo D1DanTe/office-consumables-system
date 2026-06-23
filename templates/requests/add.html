@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}
+Создание заявки
+{% endblock %}
+
+{% block content %}
+
+<h1>Создание заявки</h1>
+
+<form method="POST">
+
+    <p>Товар из каталога</p>
+
+    <select name="product_name">
+
+        <option value="">
+            Выберите товар
+        </option>
+
+        {% for product in products %}
+
+        <option value="{{ product.name }}">
+            {{ product.name }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <p>
+        Если товара нет в каталоге
+    </p>
+
+    <input
+        type="text"
+        name="custom_product"
+        placeholder="Введите название товара"
+    >
+
+   <p>Ед. измерения для нового товара</p>
+
+<select name="custom_unit">
+
+    <option value="">
+        Выберите единицу
+    </option>
+
+    <option value="шт">
+        Штука
+    </option>
+
+    <option value="пачка">
+        Пачка
+    </option>
+
+    <option value="блок">
+        Блок
+    </option>
+
+    <option value="рулон">
+        Рулон
+    </option>
+
+    <option value="литр">
+        Литр
+    </option>
+
+    <option value="кг">
+        Килограмм
+    </option>
+
+    <option value="упаковка">
+        Упаковка
+    </option>
+
+    <option value="комплект">
+        Комплект
+    </option>
+
+</select>
+
+    <p>Количество</p>
+
+    <input
+        type="number"
+        name="quantity"
+        min="1"
+        required
+    >
+
+    <p>Комментарий</p>
+
+    <textarea
+        name="comment"
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Создать заявку
+    </button>
+
+</form>
+
+{% endblock %}

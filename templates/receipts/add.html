@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}
+Добавить поступление
+{% endblock %}
+
+{% block content %}
+
+<h1>Добавить поступление</h1>
+
+{% if error %}
+
+<p style="color: red;">
+    {{ error }}
+</p>
+
+{% endif %}
+
+<form method="POST">
+
+    <p>Наименование товара</p>
+    <input
+        type="text"
+        name="product_name"
+        required
+    >
+
+    <p>Количество</p>
+    <input
+        type="number"
+        name="quantity"
+        required
+    >
+
+    <p>Ед. измерения</p>
+    <input
+        type="text"
+        name="unit"
+        required
+    >
+
+    <p>Комментарий</p>
+    <textarea
+        name="comment"
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+{% endblock %}

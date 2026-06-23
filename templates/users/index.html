@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+Пользователи
+{% endblock %}
+
+{% block content %}
+
+<h1>Пользователи</h1>
+
+<p>
+    <a href="/users/add">
+        <button>
+            Добавить пользователя
+        </button>
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>ФИО</th>
+        <th>Логин</th>
+        <th>Роль</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for user in users %}
+
+    <tr>
+
+        <td>
+            {{ user.first_name }}
+            {{ user.last_name }}
+        </td>
+
+        <td>{{ user.login }}</td>
+
+        <td>{{ user.role }}</td>
+
+        <td>{{ user.status }}</td>
+
+        <td>
+
+            <a href="/users/edit/{{ user.id }}">
+                Редактировать
+            </a>
+
+            |
+
+            <a href="/users/status/{{ user.id }}/active">
+                Активировать
+            </a>
+
+            |
+
+            <a href="/users/status/{{ user.id }}/blocked">
+    Заблокировать
+</a>
+
+{% if user.id != current_user.id %}
+
+|
+
+<a
+    href="/users/delete/{{ user.id }}"
+    onclick="return confirm('Удалить пользователя?');"
+>
+    Удалить
+</a>
+
+{% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

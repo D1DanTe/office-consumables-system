@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+Редактирование поставщика
+{% endblock %}
+
+{% block content %}
+
+<h1>Редактирование поставщика</h1>
+
+<form method="POST">
+
+    <p>Название компании</p>
+    <input
+        type="text"
+        name="company_name"
+        value="{{ supplier.company_name }}"
+        required
+    >
+
+    <p>Контактное лицо</p>
+    <input
+        type="text"
+        name="contact_person"
+        value="{{ supplier.contact_person }}"
+    >
+
+    <p>Телефон</p>
+    <input
+        type="text"
+        name="phone"
+        value="{{ supplier.phone }}"
+    >
+
+    <p>Email</p>
+    <input
+        type="email"
+        name="email"
+        value="{{ supplier.email }}"
+    >
+
+    <p>Комментарий</p>
+
+    <textarea
+        name="comment"
+    >{{ supplier.comment }}</textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Добавить поставщика
+{% endblock %}
+
+{% block content %}
+
+<h1>Добавить поставщика</h1>
+
+<form method="POST">
+
+    <p>Название компании</p>
+    <input
+        type="text"
+        name="company_name"
+        required
+    >
+
+    <p>Контактное лицо</p>
+    <input
+        type="text"
+        name="contact_person"
+    >
+
+    <p>Телефон</p>
+    <input
+        type="text"
+        name="phone"
+    >
+
+    <p>Email</p>
+    <input
+        type="email"
+        name="email"
+    >
+
+    <p>Комментарий</p>
+    <textarea
+        name="comment"
+    ></textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Сохранить
+    </button>
+
+</form>
+
+{% endblock %}

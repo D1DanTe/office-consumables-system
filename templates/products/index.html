@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}
+Товары
+{% endblock %}
+
+{% block content %}
+
+<h1>Товары</h1>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Поиск товара"
+        value="{{ search }}"
+    >
+
+    <button type="submit">
+        Найти
+    </button>
+
+</form>
+
+<br>
+
+{% if current_user.role != "user" %}
+
+<p>
+    <a href="/products/add">
+        <button>
+            Добавить товар
+        </button>
+    </a>
+</p>
+
+{% endif %}
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Наименование</th>
+        <th>Ед. изм.</th>
+        <th>Остаток</th>
+        <th>Мин. остаток</th>
+        <th>Статус</th>
+        <th>Описание</th>
+        <th>Комментарий</th>
+        {% if current_user.role != "user" %}
+<th>Действия</th>
+{% endif %}
+    </tr>
+
+    {% for product in products %}
+
+    <tr>
+
+        <td>{{ product.name }}</td>
+
+        <td>{{ product.unit }}</td>
+
+        <td>{{ product.current_stock }}</td>
+
+        <td>{{ product.min_stock }}</td>
+
+        <td>
+
+            {% if product.current_stock <= product.min_stock %}
+
+                Нужно закупить
+
+            {% else %}
+
+                В наличии
+
+            {% endif %}
+
+        </td>
+
+        <td>
+            {{ product.description }}
+        </td>
+
+        <td>
+            {{ product.comment }}
+        </td>
+
+        {% if current_user.role != "user" %}
+
+<td>
+
+    <a href="/products/edit/{{ product.id }}">
+        Редактировать
+    </a>
+
+    |
+
+    <a
+    href="/products/delete/{{ product.id }}"
+    onclick="return confirm('Удалить товар?');"
+>
+    Удалить
+</a>
+
+</td>
+
+{% endif %}
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
